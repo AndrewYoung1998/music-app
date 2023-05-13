@@ -1,5 +1,5 @@
-import './App.css';
 import LastfmSongData from "./LastfmSongData";
+import TopTracks from "./TopTracks";
 
 function App() {
   return (
@@ -18,7 +18,8 @@ function App() {
           Learn React
         </a>
       </header>*/}
-      <LastfmSongData />
+        <TopTracks/>
+        <LastfmSongData />
     </div>
   );
 }

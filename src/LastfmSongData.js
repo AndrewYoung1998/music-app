@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './LastfmSongData.css';
+import './LastfmSongData.css'; // import the CSS file
 
 function LastfmSongData() {
     const [song, setSong] = useState('');
@@ -33,30 +33,30 @@ function LastfmSongData() {
     };
 
     return (
-        <div className="lastfm-container">
+        <div className="lastfm-song-data">
             <form onSubmit={handleSubmit}>
-                <div className="input-group">
-                    <label className="input-label">
-                        Artist:
-                        <input type="text" name="artist" onChange={handleInputChange} />
-                    </label>
-                    <label className="input-label">
-                        Song:
-                        <input type="text" name="track" onChange={handleInputChange} />
-                    </label>
-                    <button type="submit" className="submit-button">Submit</button>
-                </div>
+                <label>
+                    Artist:
+                    <input type="text" name="artist" onChange={handleInputChange} />
+                </label>
+                <label>
+                    Song:
+                    <input type="text" name="track" onChange={handleInputChange} />
+                </label>
+                <button type="submit">Submit</button>
             </form>
             {data && (
-                <div className="song-data-container">
-                    <h2 className="song-title">{data.name}</h2>
-                    <p className="artist-name">By {data.artist}</p>
-                    <img className="album-cover" src={data.image} alt={data.name} />
-                    <p className="listener-count">Listeners: {data.listeners}</p>
-                    <p className="play-count">Playcount: {data.playcount}</p>
+                <div className="song-data">
+                    <h2>{data.name}</h2>
+                    <p>By {data.artist}</p>
+                    <div className="image-container">
+                        <img src={data.image} alt={data.name} />
+                    </div>
+                    <p>Listeners: {data.listeners}</p>
+                    <p>Playcount: {data.playcount}</p>
                     <ul className="tag-list">
                         {data.tags.map((tag) => (
-                            <li key={tag.name} className="tag">{tag.name}</li>
+                            <li key={tag.name}>{tag.name}</li>
                         ))}
                     </ul>
                 </div>

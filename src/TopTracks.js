@@ -30,7 +30,7 @@ const TopTracks = () => {
                     {tracks.map((track) => (
                         <li key={track.name}>
                             <div className="image-container-track">
-                                <img src={track.image[3]["#text"]} alt={track.name} />
+                                <img src={track.image[2]["#text"]} alt={track.name} />
                             </div>
                             <div className="track-info">
                                 <h3>{track.name}</h3>

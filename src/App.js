@@ -1,27 +1,36 @@
-import LastfmSongData from "./LastfmSongData";
-import TopTracks from "./TopTracks";
-
+import React from 'react';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+import LastfmSongData from './LastfmSongData';
+import ArtistInfo from './ArtistInfo';
+import TopTracks from './TopTracks';
+import './index.css';
 function App() {
-  return (
-    <div className="App">
-      {/*<header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>*/}
-        <TopTracks/>
-        <LastfmSongData />
-    </div>
-  );
+
+    return (
+        <div className="App">
+            <div className="leftPanel">
+                <TopTracks />
+            </div>
+
+            <div className="rightPanel">
+                <Tabs>
+                    <TabList>
+                        <Tab>Artist Info</Tab>
+                        <Tab>Last.fm Song Data</Tab>
+                    </TabList>
+
+                    <TabPanel>
+                        <ArtistInfo />
+                    </TabPanel>
+
+                    <TabPanel>
+                        <LastfmSongData />
+                    </TabPanel>
+                </Tabs>
+            </div>
+        </div>
+    );
 }
 
 export default App;

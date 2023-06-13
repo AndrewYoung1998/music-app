@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState } from 'react';
+import './LastfmSongData.css';
 const ArtistInfo = () => {
     const [artist, setArtist] = useState('');
     const [artistInfo, setArtistInfo] = useState(null);
@@ -15,7 +15,14 @@ const ArtistInfo = () => {
                 )}&api_key=${apiKey}&format=json`
             );
             const data = await response.json();
-            setArtistInfo(data.artist);
+            if (data.artist && data.artist.bio && data.artist.bio.content) {
+                setArtistInfo(data.artist);
+            } else {
+                setArtistInfo(null);
+                setArtist('');
+                alert("Artist not found");
+                console.error('Unexpected response:', data);
+            }
             setIsLoading(false);
         } catch (error) {
             console.error('Error fetching artist info:', error);
@@ -24,8 +31,11 @@ const ArtistInfo = () => {
     };
 
     const handleFetchButtonClick = () => {
-        if (artist) {
+        if (artist != null && artist !== '') {
             fetchArtistInfo();
+        }else{
+            setArtistInfo(null)
+            alert("Please enter artist name")
         }
     };
 
@@ -35,16 +45,21 @@ const ArtistInfo = () => {
             <button onClick={handleFetchButtonClick}>Fetch Artist Info</button>
             {isLoading && <div>Loading artist info...</div>}
             {artistInfo && (
-                <div>
+                <div className="grid-container">
                     <h2>{artistInfo.name}</h2>
-                    <p dangerouslySetInnerHTML={{ __html: artistInfo.bio.summary }} ></p>
-                    <img src={artistInfo.image[1]['#text']} alt={artistInfo.name} />
-                    <ul className="tag-list">
-                        {artistInfo.tags.tag.map((tag) => (
-                            <li key={tag.name}>{tag.name}</li>
-                        ))}
-                    </ul>
+                    <div className="summary-pic-container">
+                        <div>
+                            <p dangerouslySetInnerHTML={{ __html: artistInfo.bio.summary }}></p>
+                            <ul className="tag-list">
+                                {artistInfo.tags.tag.map((tag) => (
+                                    <li key={tag.name}>{tag.name}</li>
+                                ))}
+                            </ul>
+                        </div>
+                        <img src={artistInfo.image[1]['#text']} alt={artistInfo.name} />
+                    </div>
                 </div>
+
             )}
         </div>
     );

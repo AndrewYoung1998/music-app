@@ -41,8 +41,11 @@ const ArtistInfo = () => {
 
     return (
         <div>
-            <input type="text" value={artist} onChange={(e) => setArtist(e.target.value)} />
-            <button onClick={handleFetchButtonClick}>Fetch Artist Info</button>
+            <div className={"input-layout"}>
+
+                <input type="text" value={artist} onChange={(e) => setArtist(e.target.value)} placeholder={"Enter Artist Name"} />
+                <button onClick={handleFetchButtonClick}>Fetch Artist Info</button>
+            </div>
             {isLoading && <div>Loading artist info...</div>}
             {artistInfo && (
                 <div className="grid-container">

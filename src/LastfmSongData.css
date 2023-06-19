@@ -6,22 +6,9 @@
 
 .lastfm-song-data {
     display: flex;
-    width: 50%;
-}
-
-form {
-    display: flex;
+    width: 75%;
     flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
 }
-
-label {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-}
-
 input[type='text'] {
     padding: 15px;
     margin-top: 5px;
@@ -68,16 +55,20 @@ img {
     border-radius: 15px;
 }
 .summary-pic-container img{
-    width: 75%;
+    width: 50%;
     border-radius: 10px;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.75);
+    float:right;
+}
+img.image-container {
+    width: 75%;
+    height: auto;
 }
 .tag-list {
     list-style: none;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
     margin: 20px 0 0;
 }
 
@@ -173,11 +164,24 @@ img {
 .grid-container h2{
     margin:0;
 }
-.tag-list {
-    grid-column: 1 / -1;
-}
 .input-layout{
     display: flex;
     flex-direction: column;
     width: 75%;
+}
+.song-input-parent{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.song-input-parent .input-layout{
+    width: 100%;
+}
+.top-tracks-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.top-tracks-container .top-track img{
+    width: 50%;
+    height:auto
 }

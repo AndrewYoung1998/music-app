@@ -75,10 +75,9 @@ const ArtistInfo = () => {
                 <input type="text" value={artist} onChange={(e) => setArtist(e.target.value)} placeholder={"Enter Artist Name"} />
                 <button onClick={handleFetchButtonClick}>Fetch Artist Info</button>
             </div>
-            {showAlert.visible && <SlideUpAlert message={`${showAlert.message}`} duration={3000} />}
             {isLoading && <div>Loading artist info...</div>}
             {/*Artist Info }*/}
-            {artistInfo && (
+            {artistInfo != null && !showAlert.visible ? (
                 <div className="grid-container">
                     <h2>{artistInfo.name}</h2>
                     <div className="summary-pic-container">
@@ -93,7 +92,7 @@ const ArtistInfo = () => {
                         <img src={artistInfo.image[3]['#text']} alt={artistInfo.name} />
                     </div>
                 </div>
-            )}
+            ): <SlideUpAlert message={`${showAlert.message}`} duration={3000} />}
             <br/>
             {/*Top 5 Tracks*/}
             {artistTopTracks && (

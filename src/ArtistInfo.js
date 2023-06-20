@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import './LastfmSongData.css';
+import SlideUpAlert from "./SlideUpAlert";
 const ArtistInfo = () => {
     const [artist, setArtist] = useState('');
     const [artistInfo, setArtistInfo] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [artistTopTracks, setArtistTopTracks] = useState(null);
+    const [showAlert, setShowAlert] = useState({
+        visible: false,
+        message: '',
+    });
     const apiKey = 'e41cdbb8ee5a5f138aeb8c1a31cd31f5';
     const fetchArtistInfo = async () => {
         try {
@@ -28,29 +33,39 @@ const ArtistInfo = () => {
                 //store artist info data in state
                 setArtistInfo(data.artist);
                 setArtistTopTracks(artistTrackData.toptracks.track);
+                setTimeout(() => {
+                    window.scrollTo({
+                        top: document.body.scrollHeight,
+                        behavior: 'smooth',
+                    });}, 500);
             } else {
                 //clear artist info data
+                setShowAlert({visible: true, message: 'There seems to be an error. Check your inputs'})
                 setArtistInfo(null);
                 setArtist('');
                 setArtistTopTracks(null)
-                alert("Artist not found");
             }
             setIsLoading(false);
         } catch (error) {
-            alert("There was an error please check your inputs");
+            setArtistInfo(null);
+            setArtist('');
+            setArtistTopTracks(null);
+            setShowAlert({visible: true, message: 'There seems to be an error. Check your inputs'})
         }
     };
 
     //handle fetch button click
     const handleFetchButtonClick = () => {
         //check if artist name is not empty
-        if (artist != null && artist !== '') {
+        if (artist !== '') {
             //fetch artist info
             fetchArtistInfo();
         }else{
             //clear artist info data
-            setArtistInfo(null)
-            alert("Please enter artist name")
+            setShowAlert({visible: true, message: 'Please enter an artist.'});
+            setArtistInfo(null);
+            setArtist('');
+            setArtistTopTracks(null);
         }
     };
 
@@ -60,6 +75,7 @@ const ArtistInfo = () => {
                 <input type="text" value={artist} onChange={(e) => setArtist(e.target.value)} placeholder={"Enter Artist Name"} />
                 <button onClick={handleFetchButtonClick}>Fetch Artist Info</button>
             </div>
+            {showAlert.visible && <SlideUpAlert message={`${showAlert.message}`} duration={3000} />}
             {isLoading && <div>Loading artist info...</div>}
             {/*Artist Info }*/}
             {artistInfo && (

@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
 import './LastfmSongData.css'; // import the CSS file
+import SlideUpAlert from "./SlideUpAlert";
 
 function LastfmSongData() {
+    //State variables
     const [song, setSong] = useState('');
     const [data, setData] = useState(null);
-
+    const [showAlert, setShowAlert] = useState({
+        show: false,
+        message: '',
+    });
+    //Function to handle form submition
     const handleSubmit = async (e) => {
         e.preventDefault();
         const apiKey = 'e41cdbb8ee5a5f138aeb8c1a31cd31f5';
@@ -12,9 +18,18 @@ function LastfmSongData() {
         try {
             const response = await fetch(url);
             const json = await response.json();
-            if(json.error){
+            if(song === '' || song === null){
                 setData(null);
-                alert(json.message);
+                setShowAlert({
+                    show: true,
+                    message: 'Enter a song and artist name.'
+                })
+            }else if(json.error){
+                setData(null);
+                setShowAlert({
+                    show: true,
+                    message: 'Song not found. Please try again.'
+                })
             }else{
                 setData({
                     name: json.track.name,
@@ -27,7 +42,10 @@ function LastfmSongData() {
                 });
             }
         } catch (error) {
-            alert("There was an error please check your inputs")
+            setShowAlert({
+                show: true,
+                message: 'Something went wrong. Please try again later.',
+            })
         }
     };
     //Function to format duration from seconds to minutes and seconds
@@ -36,6 +54,7 @@ function LastfmSongData() {
         const minutes = Math.floor((durationInSeconds / (1000 * 60)) % 60)
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
     }
+    //Function to handle input change
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setSong({ ...song, [name]: value });
@@ -50,6 +69,9 @@ function LastfmSongData() {
                 </div>
                 <button onClick={handleSubmit} type={"submit"}>Fetch Song Info</button>
             </div>
+            {showAlert.show && (
+                <SlideUpAlert message={showAlert.message} duration={3000} showAlert={setShowAlert}/>
+            )}
             {data && (
                 <div className="song-data summary-pic-container">
                         <div className={"song-data-info"}>

@@ -7,7 +7,7 @@ const ArtistInfo = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [artistTopTracks, setArtistTopTracks] = useState(null);
     const [showAlert, setShowAlert] = useState({
-        visible: false,
+        show: false,
         message: '',
     });
     const apiKey = 'e41cdbb8ee5a5f138aeb8c1a31cd31f5';
@@ -16,13 +16,11 @@ const ArtistInfo = () => {
             setIsLoading(true);
             //fetch artist info
             const response = await fetch(
-                `http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${encodeURIComponent(
-                    artist )}&api_key=${apiKey}&format=json`
+                `http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${encodeURIComponent(artist)}&api_key=${apiKey}&format=json`
             );
             // fetch artist top tracks
             const artistTopTracks = await fetch(
-                `http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=${encodeURIComponent(
-                    artist)}&api_key=${apiKey}&format=json`
+                `http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=${encodeURIComponent(artist)}&api_key=${apiKey}&format=json`
             );
             //store artist top tracks date
             const artistTrackData = await artistTopTracks.json();
@@ -40,17 +38,23 @@ const ArtistInfo = () => {
                     });}, 500);
             } else {
                 //clear artist info data
-                setShowAlert({visible: true, message: 'There seems to be an error. Check your inputs'})
                 setArtistInfo(null);
                 setArtist('');
                 setArtistTopTracks(null)
+                setShowAlert({
+                    show: true,
+                    message: 'Artist not found. Please try again.',
+                })
             }
             setIsLoading(false);
         } catch (error) {
             setArtistInfo(null);
             setArtist('');
             setArtistTopTracks(null);
-            setShowAlert({visible: true, message: 'There seems to be an error. Check your inputs'})
+            setShowAlert({
+                show: true,
+                message: 'Something went wrong. Please try again later.',
+            })
         }
     };
 
@@ -62,22 +66,27 @@ const ArtistInfo = () => {
             fetchArtistInfo();
         }else{
             //clear artist info data
-            setShowAlert({visible: true, message: 'Please enter an artist.'});
             setArtistInfo(null);
             setArtist('');
             setArtistTopTracks(null);
+            setShowAlert({
+                show: true,
+                message: 'Please enter artist name',
+            })
         }
     };
-
     return (
         <div>
             <div className={"input-layout"}>
                 <input type="text" value={artist} onChange={(e) => setArtist(e.target.value)} placeholder={"Enter Artist Name"} />
                 <button onClick={handleFetchButtonClick}>Fetch Artist Info</button>
             </div>
+            {showAlert.show && (
+                <SlideUpAlert message={showAlert.message} duration={3000} showAlert={setShowAlert}/>
+            )}
             {isLoading && <div>Loading artist info...</div>}
             {/*Artist Info }*/}
-            {artistInfo != null && !showAlert.visible ? (
+            {artistInfo && (
                 <div className="grid-container">
                     <h2>{artistInfo.name}</h2>
                     <div className="summary-pic-container">
@@ -92,8 +101,9 @@ const ArtistInfo = () => {
                         <img src={artistInfo.image[3]['#text']} alt={artistInfo.name} />
                     </div>
                 </div>
-            ): <SlideUpAlert message={`${showAlert.message}`} duration={3000} />}
+            )}
             <br/>
+
             {/*Top 5 Tracks*/}
             {artistTopTracks && (
                 <div className="grid-container">

@@ -16,11 +16,11 @@ const ArtistInfo = () => {
             setIsLoading(true);
             //fetch artist info
             const response = await fetch(
-                `http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${encodeURIComponent(artist)}&api_key=${apiKey}&format=json`
+                `https://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${encodeURIComponent(artist)}&api_key=${apiKey}&format=json`
             );
             // fetch artist top tracks
             const artistTopTracks = await fetch(
-                `http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=${encodeURIComponent(artist)}&api_key=${apiKey}&format=json`
+                `https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=${encodeURIComponent(artist)}&api_key=${apiKey}&format=json`
             );
             //store artist top tracks date
             const artistTrackData = await artistTopTracks.json();

@@ -13,8 +13,7 @@ function LastfmSongData() {
     //Function to handle form submition
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const apiKey = 'e41cdbb8ee5a5f138aeb8c1a31cd31f5';
-        const url = `https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${apiKey}&artist=${encodeURIComponent(song.artist)}&track=${encodeURIComponent(song.track)}&format=json`;
+        const url = `https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${process.env.API_KEY}&artist=${encodeURIComponent(song.artist)}&track=${encodeURIComponent(song.track)}&format=json`;
         try {
             const response = await fetch(url);
             const json = await response.json();

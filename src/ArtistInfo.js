@@ -1,7 +1,10 @@
+
 import React, { useState } from 'react';
 import './LastfmSongData.css';
 import SlideUpAlert from "./SlideUpAlert";
+//Create a functional component for the Lastfm Artist Data
 const ArtistInfo = () => {
+    //State variables
     const [artist, setArtist] = useState('');
     const [artistInfo, setArtistInfo] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -10,6 +13,7 @@ const ArtistInfo = () => {
         show: false,
         message: '',
     });
+    //Function to handle form submission
     const fetchArtistInfo = async () => {
         try {
             setIsLoading(true);
@@ -74,6 +78,7 @@ const ArtistInfo = () => {
             })
         }
     };
+    //return JSX for the component (Artist Info)
     return (
         <div>
             <div className={"input-layout"}>

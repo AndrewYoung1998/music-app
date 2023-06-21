@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './LastfmSongData.css'; // import the CSS file
 import SlideUpAlert from "./SlideUpAlert";
 
+//Create a functional component for the Lastfm Song Data
 function LastfmSongData() {
     //State variables
     const [song, setSong] = useState('');
@@ -10,7 +11,7 @@ function LastfmSongData() {
         show: false,
         message: '',
     });
-    //Function to handle form submition
+    //Function to handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault();
         const url = `https://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=${process.env.REACT_APP_API_KEY}&artist=${encodeURIComponent(song.artist)}&track=${encodeURIComponent(song.track)}&format=json`;
@@ -59,6 +60,7 @@ function LastfmSongData() {
         setSong({ ...song, [name]: value });
     };
 
+    //JSX to render HTML elements and components to the DOM
     return (
         <div className="lastfm-song-data">
             <div className="song-input-parent">

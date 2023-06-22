@@ -44,6 +44,7 @@ const ArtistInfo = () => {
                 setArtistInfo(null);
                 setArtist('');
                 setArtistTopTracks(null)
+                //show alert
                 setShowAlert({
                     show: true,
                     message: 'Artist not found. Please try again.',
@@ -51,9 +52,11 @@ const ArtistInfo = () => {
             }
             setIsLoading(false);
         } catch (error) {
+            //clear artist info data
             setArtistInfo(null);
             setArtist('');
             setArtistTopTracks(null);
+            //show alert
             setShowAlert({
                 show: true,
                 message: 'Something went wrong. Please try again later.',
